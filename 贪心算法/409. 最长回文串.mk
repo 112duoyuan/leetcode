@@ -1,0 +1,34 @@
+给定一个包含大写字母和小写字母的字符串 s ，返回 通过这些字母构造成的 最长的回文串的长度。
+
+在构造过程中，请注意 区分大小写 。比如 "Aa" 不能当做一个回文字符串。
+
+示例 1:
+
+输入:s = "abccccdd"
+输出:7
+解释:
+我们可以构造的最长的回文串是"dccaccd", 它的长度是 7。
+
+思路：回文串，从前或者从后开始字符串都是一样的比如aabaa,aaccbccaa;
+回文串至多有一个奇数的字母；
+一个字符出现了v次，说明可以放置v/2 * 2次，左右两边各放v/2次；如果出现奇数次，则可以作为回文串的中心，设置一个标志，在接下来碰到奇数串都无视掉；
+
+class Solution{
+public:
+	int longestPalindrome(string s){
+		unordered_map<char,int>ma;
+		for(auto i : s){
+			ma[i]++;
+		}
+		int ans =0;
+		for(auto i : ma){
+			int num = i.second;
+			ans += num / 2 * 2;
+			if(num % 2 == 1 && ans % 2 == 0){
+				ans++;
+			}
+		}
+		return ans;
+	}
+};
+时间复杂度O(n),空间复杂度O(S) S为字符集大小 C++哈希表映射最多存储52个字符的键值对，大小写字母数量之和
